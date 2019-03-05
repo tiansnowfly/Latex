@@ -1,0 +1,182 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab01-Algorithm Analysis}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2019.}}
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Mingran Peng. Also please use English in homework.}
+
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:\quad \underline{ÌïÑ©·É}  \quad Student ID:\quad \underline{515030910347}\quad Email: \quad \underline{13487426939@qq.com}}
+\end{center}
+\begin{enumerate}
+\item
+\begin{solution}
+The following is solution process:
+\newline
+\\
+	\begin{tabular}{c|c| c }
+		\toprule[2pt]
+		\textbf{Algorithm} & \textbf{Time Complexity} & \textbf{Space Complexity} \\
+		\hline
+		\hline
+		$InsertionSort$& $O(n^2)$, $\Omega(n)$  &  $\Theta(1)$  \\
+		
+		$CocktailSort$ & \color{blue}$O(n^2)$,$\Omega(n)$ &  \color{blue}$\Theta(1)$ \\
+
+		$SelectionSort$ & \color{blue}$O(n^2)$,$\Omega(n)$ &  \color{blue}$\Theta(1)$ \\
+		\bottomrule[2pt]
+
+
+	\end{tabular}
+\\
+\\
+\textbf{CocktailSort:}\newline
+\textbf{Line 4:}\quad The number of \textbf{comparisons} carried out by Cocktailsort in loop
+\begin{equation}
+n-1
+\end{equation}
+and the number of \textbf{swap and assignment operation} at at least(\textbf{best})
+\begin{equation}
+0
+\end{equation}
+at most(\textbf{worst})
+\begin{equation}
+2(n-1)+2(n-3)+\dots+1
+\end{equation}
+\textbf{Line 9:}\quad The number of \textbf{comparisons} carried out by in loop at most least(\textbf{best})
+\begin{equation}
+n-2
+\end{equation}
+and the number of \textbf{swap and assignment operation} at least(\textbf{best})
+\begin{equation}
+0
+\end{equation}
+at most(\textbf{worst})
+\begin{equation}
+2(n-2)+2(n-4)+\dots+0
+\end{equation}
+\textbf{so,} the number of total executed in the loop of while at least\textbf{(best)}
+\begin{equation}
+T(n)=n-1+n-2=2n-3
+\end{equation}
+at most \textbf{(worst)}
+\begin{equation}
+T(n)=n-1+n-2+2\sum_{0}^{n-1}{k}=n^2+n-3
+\end{equation}
+\textbf{so,Time Complexity is $O(n^2)$ and $\Omega(n)$,and Space Complexity is $\Theta(1)$.}
+\\
+\\
+\textbf{SelectionSort:}\newline
+\textbf{Line $2$:} \quad The loop executed from $1$ to $n-1$\;\textbf{so},the number of \textbf{assignment operations} \\ carried out by SelectionSort are: \newline
+\begin{equation}
+2(n-1)
+\end{equation}
+\textbf{Line $4$:} \quad The comparisons of $A[j]>max$ will be executed when
+\\
+$j=2$,the number of comparisons are $n-1$;\\
+$j=3$,the number of comparisons are $n-2$;\\
+\vdots \\
+$j=n$,the number of comparisons are $0$; \\
+\textbf{so},the number of \textbf{comparisons} carried out by SelectionSort are:
+\begin{equation}
+\sum_0^{n-1}{j}=\frac{n(n-1)}{2}
+\end{equation}
+The number of \textbf{assignment operations} carried out in second loop are \\
+at most:
+\begin{equation}
+n(n-1)
+\end{equation}
+at least:
+\begin{equation}
+0
+\end{equation}
+The number of total executed in SelectionSort are at most\textbf{(worst)}:
+\begin{equation}
+T(n)=2(n-1)+\frac{n(n-1)}{2}+n(n-1)=\frac{1}{2}(3n^2+n-4);
+\end{equation}
+The number of total executed in SelectionSort are at most\textbf{(best)}:
+\begin{equation}
+T(n)=2(n-1)+\frac{n(n-1)}{2}=\frac{1}{2}(n^2+3n-4);
+\end{equation}
+\textbf{so,Time Complexity is $O(n^2)$ and $\Omega(n)$,and Space Complexity is $\Theta(1)$.}
+\end{solution}
+\item
+\begin{solution}
+The following is solution process:\\
+\textbf{(a) Two stack to simulated queue:}\\
+\indent \hspace{0.8cm} $\bullet$ \textbf{stack1} is used for \textbf{enqueue},\textbf{stack2} is used for \textbf{dequeue};\\
+\indent \hspace{0,8cm} $\bullet$ when pushing an element,we push it into \textbf{stack1};\\
+\indent \hspace{0.8cm} $\bullet$ when popping an element,if \textbf{stack2} is empty,we push all elements in \textbf{stack1} \\ \indent \hspace{1.1cm} into \textbf{stack2},if \textbf{stack2} is not empty,we pop an element in \textbf{stack2} directly.\\
+\textbf{(b) Time Complexity(potential function):}\\
+\indent \hspace{1cm}\textbf{Potential function:} $\Phi(S)$ denote the num[i] of items in \textbf{stack1}.\\
+\indent \hspace{1cm}\textbf{State:} Here state $S_i$ refers to the state of the  \textbf{stack1} after the $i$-th.\\
+\indent \hspace{1cm}\textbf{Correctness:} $\Phi(S_i) \geq 0= \Phi(S_0)$ for any i;\\
+\indent \hspace{1cm}According to the definition of $\Phi(S)$,we know
+\begin{equation}
+\Phi(S_i)=num[i]
+\end{equation}
+\indent \hspace{3cm} \textbf{PUSH:} $\hat{C_i}=C_i+\Phi(S_i)-\Phi(S_0)$\\
+\indent \hspace{5.3cm}$=1+num[i]-num[i-1]$\\
+\indent \hspace{5.3cm}$=1+num[i-1]+1-num[i-1]$\\
+\indent \hspace{5.3cm}$=2$\\
+\indent \hspace{3cm} \textbf{POP:} \\
+\indent \hspace{4cm}$\bullet$ if \textbf{stack2} is not empty:\\
+\indent \hspace{5cm} $\hat{C_i}=C_i+\Phi(S_i)-\Phi(S_0)$\\
+\indent \hspace{5.5cm} $=1+num[i]-num[i-1]$\\
+\indent \hspace{5.5cm} $=1$\\
+\indent \hspace{4cm}$\bullet$ if \textbf{stack2} is empty:\\
+\indent \hspace{5cm} $\hat{C_i}=C_i+\Phi(S_i)-\Phi(S_0)$\\
+\indent \hspace{5.5cm} $=num[i-1]+1+(num[i]-num[i-1])$\\
+\indent \hspace{5.5cm} $=num[i-1]+1+(0-num[i-1])$\\
+\indent \hspace{5.5cm} $=1$\\
+\textbf{Thus,} starting from two empty stacks,any sequence of \textbf{n1 PUSH},\textbf{n2 POP} \\ operations takes at most
+\begin{equation}
+T(n)=\sum_{i}^{n}{C_i}\leq \sum_{i}^{n}{\hat{C_i}}=2n_1+n_2. \quad Here \quad n=n_1+n_2  \quad \textbf{and}\quad n_1 \geq n_2.
+\end{equation}
+\end{solution}
+\end{enumerate}
+\end{document}
