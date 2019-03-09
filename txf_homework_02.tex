@@ -1,0 +1,121 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\usepackage{pstricks}
+\usepackage[all]{xy}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab01-Algorithm Analysis}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2019.}}
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Mingran Peng. Also please use English in homework.}
+
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:\quad \underline{ÃÔ—©∑…}  \quad Student ID:\quad \underline{515030910347}\quad Email: \quad \underline{13487426939@qq.com}}
+\end{center}
+\begin{enumerate}
+\item
+\begin{solution}
+The following is solution process:\\
+\textbf{(a)} \quad recurrence tree T(n):\\
+\begin{flushleft}
+\begin{displaymath}
+\xymatrix{
+&&&& \textbf{\large T(n)} &&&&&\textbf{\large computation}&\\
+&&&& \blacksquare \ar[dl] \ar[dr] &&&&& O(n\log n) &\\
+&&&\blacksquare \ar[dl] \ar[d] & & \blacksquare \ar[d] \ar[dr] &&&&2O(\frac{n}{2}\log \frac{n}{2})&\\
+&&\blacksquare &\blacksquare && \blacksquare & \blacksquare &&&2^{j-1}O(\frac{n}{2^{j-1}}\log \frac{n}{2^{j-1}})\\
+&&\textbf{\vdots} && \textbf{\vdots} && \textbf{\vdots} &&&\\
+&\blacksquare \ar[dl] \ar[d] && \blacksquare \ar[dl] \ar[d]&&& \blacksquare \ar[dr] \ar[d] &&&\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \textbf{\dots}& \textbf{\dots}& \blacksquare & \blacksquare &&2^{k-1}O(\frac{n}{2^{k-1}}\log \frac{n}{2^{k-1}})\\
+}
+\end{displaymath}\\
+\textbf{Complexity of T(n)=sum up all computations at each level.}
+\end{flushleft}
+\textbf{(b) \quad No,because $O(n\log n)$ is not same as $O(n^d)$.}\\
+\indent \quad \qquad \textbf{As we all know:$k=\log n$}\\
+\begin{equation}
+T(n)=\sum_0^{k-1}{2^{j-1}O(\frac{n}{2^{j-1}}\log \frac{n}{2^{j-1}})}\\
+=\sum_1^{k}{2^{j}O(\frac{n}{2^{j}}\log \frac{n}{2^{j}})}\\
+=\sum_1^{k}{O(n\log \frac{n}{2^{j}})}\\
+\end{equation}
+\begin{equation}
+=\sum_1^{k}{O(n\log \frac{2^k}{2^{j}})}=\sum_1^{k}{O(n\log 2^j)}\\
+=O(n\log^2 n)
+\end{equation}
+\end{solution}
+\item
+\begin{solution}
+The following is solution process:\\
+\textbf{(a)} The answer is in homework2.cpp\\
+\textbf{(b)} recurrence T(n) by using Master Theorem:\\
+\begin{equation}
+T(n)=2T(\frac{n}{2})+O(n^2)=O(n^2)
+\end{equation}
+
+\end{solution}
+\item
+\begin{solution}
+The following is solution process:\\
+\textbf{(a)} \quad induction:\\
+\indent \hspace{1cm} $\bullet$ n=1,we do not need sort:;\\
+\indent \hspace{1cm} $\bullet$ n=2,obviously,we can use a comparator to sort two elements;\\
+\indent \hspace{1cm} $\bullet$ we assume that we can sort k elements by using sort working:\\
+\indent \hspace{1cm} $\bullet$ n=k+1;we can construct a function:
+\begin{equation*}
+    f(x)=
+    \begin{cases}
+    \ 0 & \text{if } x<a_{k+1} \\
+    \ 1 & \text{if } x>=a_{k+1} \\
+    \end{cases}
+\end{equation*}
+\indent \hspace{1.4cm} we can sort k elements to $\{0,0\dots,1,1\}$;\\
+\indent \hspace{1cm} $a_{k+1}=1$,and we can compare $a_{k+1}$ with element in $\{0,0\dots,1,1\}$ one-by-one.\\
+\indent \hspace{1cm} obviously,we can find a right index for $a_{k+1}$ after k comparisons.\\
+\indent \hspace{1cm} \textbf{So,} a transposition network with n input is a sorting network if and only if it \\
+\indent \hspace{1cm} sort the sequence $\{n,n-1\dots,1\}$.\\
+\textbf{(b)} \quad The answer is in homework2.py\\
+\end{solution}
+\end{enumerate}
+\end{document}
