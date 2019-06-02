@@ -1,0 +1,146 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab03-Greedy Strategy}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2019.}}
+
+
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Mingran Peng.}\par
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:\quad \underline{ÌïÑ©·É}  \quad Student ID:\quad \underline{515030910347} \quad Email: \quad \underline{13487426939@qq.com}}
+\end{center}
+\begin{enumerate}
+    \item
+    \begin{proof}
+        The following is the proof process.\\
+        $\bullet$ \textbf{Greedy algorithm:}\\
+        From $1 \leftarrow n$,if $A[i]=1$, we can put a fire hydrant in position $i+1$,then $i=i+3$,
+        \\ skip i to $i+3$ and continue to check;
+        \\ if$A[i]=0$,we do not put anything in here  and skip to $i+1$,and continue to check;
+        \\ $\bullet$  \textbf{ pseudo code:}\\
+        \begin{minipage}[t]{0.6\textwidth}
+        \begin{algorithm}[H]
+        \KwIn{An array $A[1,\cdots,n]$}
+        \KwOut{minimum number of hydrants}
+        \BlankLine
+        \caption{Greedy algorithm}
+       \label{Alg-Greedy}
+       \BlankLine
+	   $i\leftarrow 1$\;
+       $count \leftarrow 0$\;
+	   \While{$i \leq n$}{
+              \If{$A[i]==1$}{
+                  if $i==n$\, put a hydrant in position n;\\
+                  if $i!=n$\, put a hydrant  in position $i+1$;\\
+                  $count=count+1;$\\
+                  $i=i+3;$ \\
+              }
+              \If{$A[i]==0$}{$i=i+1;$}
+       }
+       \Return{$count$};
+
+\end{algorithm}
+\end{minipage}
+\\ $\bullet$ \textbf{Proof:}\\
+we assume that an optimal algorithm which skip i to put a hydrant in position $j=i+1$:\\
+we prove that we can transform this optimal strategy to greedy algorithm;\\
+we assume that optimal and greedy algorithm have same strategy before position i;\\
+\textbf{optimal algorithm:} \quad $\cdots 1 \quad \underline{A[i+1],A[i+2],A[i+3]}$ \\
+\indent \hspace{5cm}                                    i           \qquad                   j=i+1 \\ \\
+\indent \hspace{6cm}$\Downarrow$ we need a hydrant to cover $A[i]$ \\ \\
+\textbf{optimal algorithm:} \quad $\cdots \underline{1 } \quad \underline{A[i+1],A[i+2],A[i+3]}$ \\
+\indent \hspace{5cm}                                    i           \qquad                   j=i+1 \\ \\
+\indent \hspace{6cm}$\Downarrow$ this is same as following strategy. \\ \\
+\textbf{optimal algorithm :} \quad $\cdots \underline{1,A[i+1],[i+2]} ,\underline{A[i+3]}$;\\ \\
+
+\textbf{greedy algorithm :} \quad $\cdots \underline{1,A[i+1],[i+2]} ,A[i+3]$;\\ \\
+we can see optimal strategy is not better than greedy algorithm.when j=i+2,i+3\\
+greedy is also not worse than optimal.\\
+\textbf{proof end.}
+    \end{proof}
+
+\item
+\begin{proof}
+        The following is proof process:\\
+            \textbf{(a)}    $\bullet$we can sort the n real number to be nonincreasing sequence, and if $M \cup {x} \in$  \textbf{C},we put \\
+           \indent\hspace{1cm}x in M until i find the biggest sum.\\
+           \indent\hspace{0.8cm}$\bullet$According to the definition of uniform matriod:\\
+           \indent\hspace{1cm}A is a set with n elements, denote \textbf{C} be the collection of all subsets of A that\\
+          \indent\hspace{1cm}contains no more than k elements.\\
+          \indent\hspace{1cm}\textbf{Proof:} \\
+          \indent\hspace{1cm}\textbf{Hereditary:}  if M $\subset$ N and N $\in$ \textbf{C}, obviously,  because N is not more than k elements, \\
+          \indent\hspace{1cm}so N can not more than k elements,then N $\in$ \textbf{C}.\\
+         \indent \hspace{1cm}\textbf{Exchange property:}  we assume that M,N $\in$ \textbf{C} and $|M|>|N|$;we know  M is not more\\
+          \indent\hspace{0.9cm} than k elements,  so N is not more than k elements; meanwhile,there must exist an \\
+           \indent\hspace{0.9cm} element in M and not in N $(x \in M $ and $ x \notin N)$; and
+          we know  $N\cup \{x\}$ is not more than \\
+           \indent\hspace{1cm}k elements. so $N \cup \{x\} \in $ \textbf{C} .\\
+            \indent\hspace{1cm}so, $(A,\mathbf{C})$ is  a matriod.\\
+            \textbf{(b)} \textbf{Proof:}\\
+            \indent\hspace{1cm}\textbf{Hereditary:} if M$\subset$ N and N$\in$ \textbf{C};
+            according to the property of N, then $\forall i\in \{1,2,3 ... n\}$,\\
+            \indent\hspace{1cm}$ |N\cap B_{i}|\leq d_{i}$ ; $M \subset N$, so, $|M\cap B_{i}|<|N\cap B_{i}|\leq d_{i}$, so, $\forall i\in \{1,2,3 ... n\},  |M\cap B_{i}|\leq d_{i}$, \\
+            \indent\hspace{1cm}then M$\subset $ \textbf{C}.\\
+             \indent \hspace{1cm}\textbf{Exchange property:} we assume that M,N $\in$ \textbf{C} and $|M|>|N|$;  then $\forall i\in \{1,2,3 ... n\}$,\\
+             \indent\hspace{1cm} $|M \cap B_{i}| \leq d_{i}$ and $|N \cap B_{i}| \leq d_{i}$; \\ \indent\hspace{1.4cm}\textbf{(1).} $|N \cap B_{i}=d_{i}$, but we know,X is subset of $\cup^{n}_{i=1} B_i$, we assume that  X=$\cup^{n}_{i=1} B_i$, \\
+             \indent\hspace{1cm}then $|X\cap B_{i}|=d_{i}$, so $N=B_{i}$; at this case, there must exist an element x which is in M \\
+             \indent\hspace{1cm}but not in N; so $(N \cup \{x\} )\cup B_{i}=d_{i}$, this's still satisfying condition.  so $N \cup \{x\} \in $ \textbf{C}. \\
+            \indent\hspace{1.4cm}\textbf{(2).} if $|N \cap B_{i}|<d_{i}$,obviously, $|M|>|N|$;
+            there must exist an element x in M and \\
+             \indent\hspace{1cm} not in N; we put x into N,and $(N \cup \{x\} )\cap B_{i} \leq d_{i}$; so $N \cup \{x\} \in $ \textbf{C}.\\
+            \indent\hspace{1cm} so, $(\cup^{n}_{i=1} B_i,\mathbf{C})$ is a matroid.\par
+\end{proof}
+
+
+
+\end{enumerate}
+
+\vspace{20pt}
+
+\textbf{Remark:} You need to include your .pdf and .tex files in your uploaded .rar or .zip file.
+
+%========================================================================
+\end{document}

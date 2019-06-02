@@ -1,0 +1,153 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{-0.45in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{11in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab04-Dynamic Programming}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2019.}}
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Jiahao Fan.}
+
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name: \underline{ÃÔ—©∑…}  \quad Student ID: \underline{515030910347} \quad Email: \underline{13487426939@qq.com}}
+\end{center}
+
+\begin{enumerate}
+    \item
+    \begin{solution}
+      The following is solution: \\
+      \textbf{(a)} The recurrence for OPT(a):
+      \begin{equation*}
+      OPT(a)=
+      \begin{cases}
+        0 & a=0 \\
+        min\{OPT(a-i^{2})+1\} & a \geq 1 \quad and \quad  i  \epsilon \textbf{N} \quad and \quad i^{2} \leq a
+      \end{cases}
+      \end{equation*}
+      \textbf{(b)}  Pseudo code by recurrence:\\
+      \begin{minipage}[t]{0.5\textwidth}
+      \begin{algorithm}[H]
+      \KwIn{A positive integer n}
+      \KwOut{The least number of perfect square numbers OPT(n)}
+      \BlankLine
+      \caption{Dynamic algorithm}
+      $OPT(0) \leftarrow 0$ \\
+      \For{$a \leftarrow 1$ \textbf{to} n }{
+         min $\leftarrow$ \textbf{N};\\
+          \For{$i \leftarrow 1$ \textbf{to} a }{
+                    \If{ OPT($a-i^{2}$)+1$<$ min}{
+                            $min\leftarrow OPT(a-i^{2})+1;$ \\
+                    }
+                    $i \leftarrow i^{2};$
+          }
+          $OPT(a) \leftarrow min$;
+      }
+      \Return{$OPT(n)$;}
+      \end{algorithm}
+      \end{minipage}
+    \end{solution}
+    \item
+    \begin{solution}
+      The following is solution:\\
+      \textbf{(a)} A recurrence for ANS(i,j):
+      \begin{equation*}
+      ANS(i,j)=
+       \begin{cases}
+       \textbf{true}&  n=0 \&\& (m=0\ || \forall j ,p[j]='*' )\\
+       ANS(i-1,j-1) \&\&(s[i]==p[j]   || p[j]=='?') & \quad p[j]!='*'\\
+       ANS(i-1,j-1) || ANS(i-1,j) || ANS(i-1,j) & \quad p[j]='*'
+       \end{cases}
+      \end{equation*}
+      \textbf{(b)} Pseudo code by recurrence:\\
+      \begin{minipage}[t]{0.8\textwidth}
+        \begin{algorithm}[H]
+              \KwIn{A string s and a pattern p.}
+              \KwOut{\textbf{true} if s matches p,or \textbf{false} otherwise.}
+              \BlankLine
+              \caption{Dynamic Algorithm}
+              $ANS(0,0)\leftarrow 0;$\\
+              \For{$j \leftarrow 0$ \textbf{to} m }{
+                      \If {$p[j]=='*'$}{
+                             $ANS(0,j)=\textbf{true};$\\
+                      }
+                      \Else{
+                            \Return{\textbf{false};}
+                      }
+              }
+              \For{$i \leftarrow 0$ \textbf{to} n-1 }{
+                      \For{$j \leftarrow 0$ \textbf{to} m-1}{
+                             \If{$p[j]!='*'$}{
+                                     $ANS(i,j)\leftarrow ANS(i-1,j)\&\&(s[i]==p[j] || p[j]=='?')$
+                             }
+                             \Else{
+                                     $ANS(i,j)\leftarrow ANS(i-1,j-1)||ANS(i-1,j)||ANS(i,j-1)$
+                             }
+                      }
+              }
+              \Return{$ANS(n,m);$}\\
+        \end{algorithm}
+      \end{minipage}
+      \\
+      \\
+      \\
+      \\
+      \textbf{(c)} According to above,we use $ANS(i,j)$ represent $ANS[i][j]$;so $ANS(i,j)$ can be \\remembered. so main time cost on two loop,and space cost on $ANS[n][m].$ so,\\
+     \textbf{Time complexity:} is $o(nm)$;\\
+      \textbf{Space complexity:} is $o(nm).$
+    \end{solution}
+    \item
+    \begin{solution}
+      The following is solution.\\
+      \textbf{(a)} The code is in Code-Sequence Alignment.cpp file.\\
+      \textbf{(b)} According to the \textbf{(a)},we can compute the edit distance between\\ the following two distance strings is $352$.\\
+      \textbf{(c)} You can enter two strings to create a graphics by($txf\_homework\_04.py$).
+     \\  and there has a example of picture in zip.
+    \end{solution}
+\end{enumerate}
+
+\vspace{20pt}
+
+\textbf{Remark:} You need to include your .cpp, .pdf and .tex files in your uploaded .rar or .zip file.
+
+%========================================================================
+\end{document}
