@@ -1,0 +1,156 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\usepackage{array}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab09-Approximation Algorithm}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2019.}}
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Jiahao Fan.}
+
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:\underline{ÃÔ—©∑…} \quad Student ID:\underline{515030910347} \quad Email: \underline{13487426939@qq.com}}
+\end{center}
+
+\begin{enumerate}
+    \item
+        \begin{solution}
+        The following is process of solution.\\
+          \textbf{a}. The basic idea of a greedy algorithm is starting with an arbitrary center, and in each round, add the 'farthest'vertex to the center set until there are totaly k centers.\\
+          \begin{algorithm}[H]
+            \KwIn{an complete undirected graph with nonnegative edge G(V,E).}
+            \KwOut{minimal $max_{v}\{cost(v,S)\}$.}
+            \caption{Greedy approximation.}
+            $\textbf{S } \leftarrow \{c_{1}\}$;  $c_1$ is an arbitrary center we choose at first .\\
+            \For{ \textbf{v} $\in$  \textbf{V-S}}{
+                    \If{$|S| \leq k$}{
+                     Find the farthest vertex $v_i$ to center set.\\
+                     $\textbf{S} \leftarrow \textbf{S} \cup \{c_i\}$.\\
+                     }
+            }
+            \Return{\textbf{S}.}
+          \end{algorithm}
+          \textbf{b}. Let's consider a set  \textbf{S} and  two vertices $v_g$ and $v_opt$ , The optimal choice is to choose $v_{opt}$ but we choose the $v_g$ by greedy algorithm. In this case,  we can use an illustration to describe this question, then we can construct the following relation: \\
+          \begin{equation*}
+          \begin{cases}
+            cost(v_g,S)=max\{s_1,s\}=s_{m1}; \\
+            cost(v_{opt},S)=mas\{s_2,s\}=s_{m2};
+            \end{cases}
+          \end{equation*}
+          \begin{figure}[htbp]
+          \begin{minipage}[h]{0.8\textwidth}
+          \centering
+         \includegraphics[width=0.9\textwidth]{1.png}
+         \caption{The flow of two nodes is 1}
+         \end{minipage}
+          \end{figure}
+          According to the triangle inequality: \\
+          $cost(v_g,S)=max\{s_1,s\}=s_{m1} \leq s_{2}+s \leq 2* max\{s_{2},s\} =2 cost(v_{opt},S) $; \\ then $cost(v_g,S) \leq 2 cost(v_{opt},S)$ ,so $\frac{cost(v_g,S)}{cost(v_{opt},S)} \leq 2$.\\
+        \end{solution}
+        \vspace{2cm}
+
+    \item
+    \begin{solution}
+      The following is the process of proof.\\
+      \textbf{proof:} In this case, we can use a vertex \textbf{v} which belongs to \textbf{R} , set \textbf{R-{v}} and set \textbf{S}, the goal is to find minimum cost tree, we can use an illustration to describe this question:\\
+      \begin{figure}[htbp]
+     \begin{minipage}[h]{0.8\textwidth}
+     \centering
+     \includegraphics[width=0.9\textwidth]{2.png}
+     \caption{The flow of two nodes is 1}
+    \end{minipage}
+    \end{figure}
+    \\
+    we consider the a vertex \textbf{v} in \textbf{R},according to approximation, we know vertex \textbf{v} must connect to one vertex in \textbf{R-{v}}, but in optimal answer,we know \textbf{v} can connect to one vertex in \textbf{S}, \\ so, we can construct to the following relation by illustration above.\\
+    \begin{equation*}
+      \begin{cases}
+        c_g=s_1+min\{s_2,s_3\};\\
+        c_{opt}=s_2+s_3;\\
+      \end{cases}
+    \end{equation*}
+    According to the triangle inequality: $c_g=s_1+min\{s_2,s_3\} \leq 2(s_2+s_3) \leq 2 c_{opt}$; For all vertices in R,we have same relation,so $C_g \leq 2 C_{opt}$, then $\frac{C_g}{C_{opt}}\leq 2.$\\
+    \end{solution}
+
+    \item
+    \textbf{Minimum Weighted Vertex Cover:} \\
+        \textbf{a. }Denote: we assume C is a cover vertex set, In graph G(V,E), for each vertex v $\in$ V, if v $\in$ C, $x(v)=1$ (vertex v in vertex cover set), if v $\notin$  C, $x(v)=0$ (vertex v  not in vertex cover set).at least one vertex is in vertex cover set for every edge:$x(v_j)+x(v_i) \geq 1;$\\
+        \textbf{integer linear program:}\\
+        \begin{equation*}
+          \begin{cases}
+            \sum_{v_i \in V} c_ix(v_i);\\
+            x(v_j)+x(v_i) \geq 1;\\
+            x(v_i),(v_j)={0,1};\\
+            i \in \{1,2 \dots n\}
+          \end{cases}
+        \end{equation*}
+
+        \textbf{b.  proof:} As we know, the following is an approximation algorithm with value  $m_{LP}(G)$ , we assume: $m^*{LP}$ is the best solution for linear program. Then $m^*(LP) \leq m^*(G)$;\\
+        In solution \textbf{a}, we know  $x(v_j)+x(v_i) \geq 1$; \\ 
+        so there must have one vertex which $x(v) \geq \frac{1}{2}$; $\{v_i,v_j\} \geq \frac{1}{2}$;\\
+          $  m^*(LP) =\sum_{v_i \in V} c_ix(v_i) \geq \sum_{v_i \in V and x(v)\geq \frac{1}{2}}
+            c_ix(v_i)$
+            $\geq \sum_{v_i \in V and x(v)\geq \frac{1}{2}}
+            \frac{1}{2}*c_i=\frac{1}{2} m_{LP}(G)$\\
+            Then, $\Rightarrow  \frac{1}{2} m_{LP}(G) \leq m^*(G)$;\\
+            So ,$ \Rightarrow m_{LP}(G)/m^*(G) \leq 2$.\\
+    \item
+    Give the corresponding $(I,sol,m,goal)$ for \textbf{Metric $k$-center} and \textbf{Minimum Weighted Vertex Cover} respectively.
+    \textbf{Metric $k$-center}(I,sol,m,goal) :\\
+         I=\{G(V,E)$|$G is a graph\}; poly time decidable.\\
+         sol=\{U $\subseteq V| $arbitrary select a vertex as center, add the 'farthest' vertex to the center set\\  \indent \qquad until there are totaly k centers.\} \\
+         m=farthest distance v to k-center set U; $v \not in U;$\\
+         $goal =min\{m\};$\\
+     \textbf{Minimum Weighted Vertex Cover} (I,sol,m,goal):\\
+           I=\{G(V,E)$|$G is a graph\};poly time decidable.\\
+          $sol={U \subseteq V| \forall (v,u) \in E (v \in V or u \in V)}.$\\
+          $m=\sum_{v \in V} c(v)x(v). v \in V,x(v)=1;v \notin V, x(v)=0; $c(v) is the cost of vertex v.\\
+          $goal=min\{m\}$\\ 
+\end{enumerate}
+
+\vspace{20pt}
+
+\textbf{Remark:} You need to include your .pdf and .tex files in your uploaded .zip file.
+
+%========================================================================
+\end{document}

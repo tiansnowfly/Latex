@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.5in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab06-Graph Exploration}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2019.}}
+
+
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Mingran Peng.}\par
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:\underline{ÃÔ—©∑…}  \quad Student ID:\underline{515030910347} \quad Email: \underline{13487426939@qq.com}}
+\end{center}
+\begin{enumerate}
+
+    \item
+    \begin{solution}
+    The following is the process of solution.\\
+    \textbf{(a)}. Answer is 6 and the ccs.cpp program file is in the txf\_homework\_06 file.\\
+    \textbf{(b)}. The ccs.gephi file is in the txf\_homework\_06 file.\\
+    \end{solution}
+\item
+\begin{proof}
+     The following is the process of proof.\\
+     \indent \qquad If we use dfs to traverse a graph, that means we visit the vertex by using a stack.\\
+     Proof by contradiction:\\
+   \indent \qquad  Assume: if two intervals are not disjoint or one is contained within the other.\\
+    and we visit u before v. we know : $PRE[u]<PRE[v]$ and $POST[u]<POST[v]$ \\
+    but $POST[u]>PRE[v]$ and $POST[v]>POST[u]$
+    According to the rule of stack. when we visited the u at first time,that means I should  push  the $PRE[u]$ into the stack and if there no other vertex connect to u,the we call
+    $POST[u]$  when we visit u, then we pop vertex u out of stack. but in the case, we push
+    $PRE[v] $ into stack before we call $POST[u]$ ;Then the stack exist $PRE[u]$ and $PRE[v]$, meanwhile $PRE[u]$ is on $PRE[v]$. so $PRE[u]$ must waiting for $PRE[v]$
+    being popped out of stack, so we call the $POST[v] $  before $POST[u]$. so
+    $POST[v]<POST[u]$, this is contradictory to $POST[v]>POST[u]$.\\
+     \indent \qquad So,$\forall u, v \in V$, intervals $[PRE(u), POST(u)]$, $[PRE(v), POST(v)]$ are either disjoint or one is contained within the other.\par
+\end{proof}
+\item
+\begin{solution}
+  The following is the process of solution.\\
+  In the case. we can change this question to the shortest path problem, and two computers communicate with a constant time t. So, we can use the BFS to solve this problem. The following is the pseudo code.\\
+  \begin{algorithm}[H]
+    \KwIn{computer s and computer t, and  an undirected Graph $G=(V,E)$ represent the relation of computer(connected(1) and unconnected(0)). vertex s $\epsilon$ \textbf{V}.}
+    \KwOut{The shortest time needed to send message between two computers.}
+    \caption{The shortest path.}
+    \For{\textbf{each}  u $\epsilon$ \textbf{V}}{
+           $DIST(u)=\infty;$\\
+           $visited[i]=false;$\\
+    }
+    $DIST(s)=0;$\\
+    $visited[s]=true;$(Mean the point is visited.)\\
+    $Q.PUSH(s)$;(Using a queue Q to do BFS.)\\
+    \While{Q is not empty}{
+           $u=Q.POP()$;\\
+           \For{\textbf{each} (u,v) $\epsilon$ \textbf{E}}{
+                     \If {$DIST(v)=\infty$ \textbf{and} $visited=false$}{
+                           $Q.PUSH(v)$;\\
+                           $visited[s]=true$;\\
+                           $DIST[v]=DIST(u)+\textbf{t}$;\\
+                     }
+                      \If{$v=\textbf{t}$}{
+                            \Return{DIST[v]}\\
+                     }
+           }
+    }
+    \Return {unconnected}
+  \end{algorithm}
+  
+  \textbf{Time complexity:} \\
+  (1) Best case: if \textbf{s} connected with \textbf{v} or connected by a constant k vertex, then time complexity is o(1).\\
+  (2)Worst case:if there is no path from \textbf{s} to \textbf{t}, then we must traverse all vertex and edges.then time complexity is o(V+E).\\
+  (3) if two computers connect by k vertex, k=0,1,2,3\dots n-2; and probability is $\frac{1}{n-1}$. then time complexity is also o(V+E).\\
+\end{solution}
+
+\end{enumerate}
+
+\vspace{20pt}
+
+\textbf{Remark:} You need to include your .pdf and .tex files in your uploaded .rar or .zip file.
+
+%========================================================================
+\end{document}

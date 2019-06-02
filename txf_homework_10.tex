@@ -1,0 +1,139 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab10-Approximation \& Randomized Algorithm}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2019.}}
+
+
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Mingran Peng.}\par
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:\underline{ÃÔ—©∑…}  \quad Student ID:\underline{515030910347} \quad Email: \underline{13487426939@qq.com}}
+\end{center}
+\begin{enumerate}
+\item
+\begin{enumerate}
+\begin{solution}
+  The following is the process of solution.\\
+  \textbf{a.} For each $x_i, x_i \in \{0,1\}$, and for the convenience of using formula by integer programming, we use $\overline{x_i}=1-x_i$.\\
+  \begin{equation*}
+    \begin{cases}
+      min\sum_{1}^{n}{x_i}\\
+      \sum {\overline{x_j}}+\sum {x_i} \geq 1; x_i,x_j \in clause_1\\
+      \sum {\overline{x_j}}+\sum {x_i} \geq 1; x_i,x_j \in clause_2\\
+      \vdots \\
+       \sum {\overline{x_j}}+\sum {x_i} \geq 1; x_i,x_j \in clause_m \\
+       x_1,x_2,\dots x_n \in \{0,1\}\\
+       \overline{x_1},\overline{x_2},\dots \overline{x_n} \in \{0,1\}\\
+    \end{cases}
+  \end{equation*}
+  Then we can change the formula to:\\
+  \begin{equation*}
+    \begin{cases}
+      min\sum_{1}^{n}{x_i}\\
+      \sum {(1-x_j)}+\sum {x_i} \geq 1; x_i,x_j \in clause_1 \quad  i,j \in {1,2 \dots n}\\
+      \sum {(1-x_j)}+\sum {x_i} \geq 1; x_i,x_j \in clause_2 \quad  i,j \in {1,2 \dots n}\\
+      \vdots \\
+       \sum {(1-x_j)}+\sum {x_i} \geq 1; x_i,x_j \in clause_m \quad  i,j \in {1,2 \dots n}\\
+       x_1,x_2,\dots x_n \in \{0,1\}\\
+    \end{cases}
+  \end{equation*}
+  \textbf{b.}LP-relaxation.\\
+\begin{algorithm}[H]
+  \KwIn{A CNF $\Phi$ with n boolean variables $\{x_i\}_{i=1}^n$ and m clauses with each clause consisting of 3 boolean variables.}
+  \KwOut{Feasible satisfiable with fewest true boolean variables.}
+  \caption{Approximation algorithm.}
+  Find an optimal algorithm solution to the LP-relaxation.\\
+  $count=0$;\\
+  /For{i to n} {
+       \If{$x_i \geq \frac{1}{3}$}{
+            $round  x_i=1$;\\
+            $count=count+1$;\\
+       }
+       \Else{
+           $round x_i=0$;\\
+       }
+  }
+  \Return{count}
+\end{algorithm}
+\end{solution}
+$OPT_{LP} \leq 3* OPL_{ILP} \leq 3*OPL$\\
+So, approximation algorithm ratio is 3.\\
+\vspace{3cm}
+
+\end{enumerate}
+%    \begin{proof}
+%        Uncomment this block to write your proof.
+%    \end{proof}
+\item
+
+\begin{enumerate}
+\item
+\begin{solution}
+  Random choose a position in $[l,r]$ , and choose to color in this position.Then we check the every position and every color for query. in this case,the pre-processing complexity is $O(n)$.\\
+  We assume: the number of position of $i_{th}$ color pearl are $k_i$; Repeat the pre-processing 10 times. For query, it will be execute $10(r-l)$ times, since r-l can achieve n-1,so time complexity per query is $O(n)$.No extra space needed.Then, prove accuracy will be better than 99.9\%.\\
+  \textbf{proof}( two cases):\\
+  $\bullet$ For all color in $[l,r]$,$k_i$ is smaller than $\frac{1}{2}(r-l)$. after 10 operations, we can not find any color which satisfies the condition. So,the answer is there does not exist this color. This answer is true.Accuracy is 100\%.\\
+  $\bullet$ For all color in $[l,r]$, if there exist one color: $k_i \geq \frac{1}{2}(r-l)+1$; when we choose a color in $[l,r]$ and repeat 10 times, the probability of $i_th$ color  not being chosen is $(1-\frac{k_i}{m})^{10}$.
+  and $p=(1-\frac{k_i}{m})^{10} \leq (1-\frac{1}{2})^{10} \leq \frac{1}{2^{10}} \leq 0.1\%$.then.the probability that the answer will go wrong is not smaller than 0.1\%, So ,Accuracy is 99.9\%.\\
+  So, the accuracy of this random algorithm will be better than 99.9\%.\\
+\end{solution}
+\end{enumerate}
+
+%    \begin{proof}
+%        Uncomment this block to write your proof.
+%    \end{proof}
+
+
+
+
+\end{enumerate}
+
+\vspace{20pt}
+
+\textbf{Remark:} You need to include your .pdf and .tex files in your uploaded .rar or .zip file.
+
+%========================================================================
+\end{document}

@@ -1,0 +1,263 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\usepackage{array}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab05-Linear Programming}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2019.}}
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Jiahao Fan.}
+
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:\underline{ÃÔ—©∑…}  \quad Student ID:\underline{515030910347} \quad Email: \underline{13487426939@qq.com}}
+\end{center}
+
+\begin{enumerate}
+    \item
+    \begin{solution}
+      The following is solution.\\
+      \textbf{(a)} we assume that we invest $x_{1}$ in project1 and $x_{2}$ in project2 at beginning of $2018.$ Then we can take out $(1+20\%)x_{1}$ and we can not take out money from project2. then we use the money we take out from project1 to invest to project1 and project3. and best strategy is to invest $100000$ to project3 and invest $1.2x_{1}-100000$ dollars. and at the end of 2019, we can take out $1.2x_{1}-100000$ form project1, $1.5x_{2}$ form project2 and $140000$,then we can formulate a programming:
+      \begin{equation*}
+        \begin{cases}
+          max\_amount=1.44x_{1}+1.5x_{2}+20000 \\
+          x_{2} \leq 150000 \\
+          x_{1}+x_{2}=300000 \\
+          x_{1},x_{2} \geq 0 \\
+        \end{cases}
+      \end{equation*}
+      \textbf{(b)} The standard form is:
+       \begin{equation*}
+         \begin{cases}
+           max\_amount=1.44x_{1}+1.5x_{2}+20000 \\
+          x_{2} \leq 150000 \\
+          x_{1}+x_{2} \leq 300000 \\
+          -x_{1}-x_{2} \leq -300000 \\
+          x_{1},x_{2} \geq 0 \\
+         \end{cases}
+       \end{equation*}
+       \qquad The slack form is:\\
+       \begin{equation*}
+         \begin{cases}
+           max\_amount=1.44x_{1}+1.5x_{2}+20000 \\
+          x_{1}+x_{2} = 300000 \\
+          x_{2}+x_{3}=150000 \\
+          x_{1},x_{2},x_{3} \geq 0 \\
+         \end{cases}
+       \end{equation*}
+       \textbf{(c)} \\
+       \begin{minipage}[t]{0.30\textwidth}
+         \indent\quad  \textbf{max} \quad   $1.44x_{1}+1.5x_{2}+20000$\\
+         \indent \quad \textbf{s.t.}
+         \begin{flushright}
+          $x_{2} \leq 150000$\\
+         $x_{1}+x_{2} \leq 300000$\\
+         $-x_{1}-x_{2}\leq -300000$\\
+         $x_{1},x_{2}\leq 0$\\
+         \end{flushright}
+       \end{minipage}
+       \hspace{2cm}
+       \begin{minipage}[t]{0.40\textwidth}
+         \rule[0.25\baselineskip]{\textwidth}{1pt}
+         \textbf{Multiplier} \qquad  \textbf{Constraint}\\
+         \rule[0.25\baselineskip]{\textwidth}{1pt}
+         \begin{minipage}[t]{0.35\textwidth}
+         \begin{center}
+         $y_{1}$ \\
+         $y_{2}$ \\
+         $y_{1}$ \\
+         \end{center}
+         \end{minipage}
+         \begin{minipage}[t]{0.6\textwidth}
+           $x_{1}+x_{2}\leq300000$\\
+           $x_{2} \leq 150000$\\
+           $-x_{1}-x_{2}\leq-300000$\\
+         \end{minipage}
+          \rule[0.25\baselineskip]{\textwidth}{1pt}
+       \end{minipage}
+       \\
+       \\
+       \\
+       \vspace{1cm}
+       \indent \quad Then we can know: $1.44x_{1}+1.5x_{2}\leq 300000y_{1}+150000y_{2}$\\
+       \indent \qquad and the constraint us following:
+       \begin{equation*}
+         \begin{cases}
+           y_{1} \geq 1.44\\
+           y_{1}+y_{2}\geq 1.5\\
+           y_{1},y_{2}\geq 0\\
+         \end{cases}
+       \end{equation*}
+       So,the dual form is:
+       \begin{equation*}
+         \begin{cases}
+          min=1.44x_{1}+1.5x_{2}\leq 300000y_{1}+150000y_{2}\\
+           y_{1} \geq 1.44\\
+           y_{1}+y_{2}\geq 1.5\\
+           y_{1},y_{2}\geq 0\\
+         \end{cases}
+       \end{equation*}
+       \textbf{(d)} According to initial formula,we can know $x_{2}150000$,amount is maximum.\\
+       \begin{equation}
+         max\_amount=1.44*150000+1.5*150000+20000=461000
+       \end{equation}
+       Then maximum amount we can get at the end of 2019 is 0.461 million dollars.\\
+    \end{solution}
+    \item
+    \begin{solution}
+      The following is solution.\\
+      \textbf{(a)} Optimization Programming Language:\\
+      \indent  \qquad$X_{ij}---$ the number of product i produced in month j.\\
+      \indent \qquad $R_{ij}---$ the  number of product i stored in month j.\\
+      \indent \qquad $SC_{ij}---$ the largest number of product i sold in month j.\\
+      \indent  \qquad$M_{kj} ---$ the number of device k used in month j.\\
+      \indent \qquad $T_{ik}---$ the time of product i used in device k.\\
+      \indent \qquad $P_{i}---$ the profit of product i\\
+      \indent  \qquad constant $---$ the hours of each month $t=8*2*24=384(hours)$.\\
+      \indent \qquad \textbf{mark:} $i=1,2\dots 7$,\quad $j=1,2\dots 6$,\quad $k=1,2\dots 5.$\\
+      Then according to the constraints:\\
+      \indent  \qquad Maximum stock(100): $R_{ij}\leq100$\\
+     \indent  \qquad  Stock in June(50): $R_{i6}=50$\\
+      \indent  \qquad Jan: $X_{i1}-R_{i1}\leq SC_{i1}$ ,$R_{i1}=0$,$i=1,2\dots7$.\\
+     \indent  \qquad  Feb-Jun:$X_{ij}+R_{ij-1}-R_{ij}\leq SC_{ij},i=1,2\dots 7,j=2,3\dots 6.$\\
+     \indent \qquad  Time limited by devices: $\sum_{j=1}^{6}\sum_{i=1}^{7}T_{ik} X_{ij}\leq \sum_{j=1}^{6}M_{kj}*384, k=1,2\dots 5$\\
+     We assume that the total profits are MAX:\\
+      so there have these relations:
+      \begin{equation*}
+        \begin{cases}
+        MAX=\sum_{i=1}^{7}\sum_{j=1}^{6}(X_{ij}P_{i}-0.5R_{ij})-50\sum_{i=1}^{7}P_{i}\\
+        R_{ij}\leq 100\\
+        R_{ij}\geq0\\
+        R_{i6} =50 \\
+        i=1,2 \dots 7, j=1,2 \dots 6\\
+        X_{i1}-R_{i1}\leq SC_{i1}$ ,$R_{i1}=0$,$i=1,2\dots7\\
+        X_{ij}+R_{ij-1}-R_{ij}\leq SC_{ij},i=1,2\dots 7,j=2,3\dots 6\\
+        \sum_{j=1}^{6}M_{kj}=(20,10,15,5,5),k=1,2\dots 5\\
+        \sum_{j=1}^{6}\sum_{i=1}^{7}T_{ik} X_{ij}\leq \sum_{j=1}^{6}M_{kj}*384, k=1,2\dots 5\\
+        \end{cases}
+      \end{equation*}
+      \\
+      The .mod and .dat documents in the compressed file(.zip).\\
+      The following is output of solution in $OPL$.\\
+      \begin{verbatim}
+// solution (optimal) with objective 108855
+// Quality Incumbent solution:
+// MILP objective                                 1.0885500000e+05
+// MILP solution norm |x| (Total, Max)            1.42440e+04  1.15000e+03
+// MILP solution error (Ax=b) (Total, Max)        0.00000e+00  0.00000e+00
+// MILP x bound error (Total, Max)                0.00000e+00  0.00000e+00
+// MILP x integrality error (Total, Max)          0.00000e+00  0.00000e+00
+// MILP slack bound error (Total, Max)            1.36424e-12  2.27374e-13
+//
+
+pro_x = [[500
+             600 400 0 -1.1369e-13 550]
+             [1000 500 700 0 100 550]
+             [300 200 100 0 500 150]
+             [300 0 100 0 100 350]
+             [800 400 600 0 1000 1150]
+             [200 300 400 0 300 550]
+             [100 150 200 0 0 110]];
+pro_r = [[0 0 100 0 -1.1369e-13 50]
+             [0 -1.1369e-13 100 0 -1.1369e-13 50]
+             [0 0 100 0 0 50]
+             [0 0 100 0 -1.1369e-13 50]
+             [0 -1.1369e-13 100 0 0 50]
+             [0 0 0 0 0 50]
+             [0 0 100 0 0 50]];
+num_device = [[2 2 2 1 1 2]
+             [1 1 1 1 1 1]
+             [1 1 1 2 2 1]
+             [1 1 1 0 1 1]
+             [1 1 1 0 1 1]];
+      \end{verbatim}
+      \textbf{(b)}\\  i. A.
+       \begin{verbatim}
+         num_device = [[2 2 2 1 1 2]
+             [1 1 1 1 1 1]
+             [1 1 1 2 2 1]
+             [1 1 1 0 1 1]
+             [1 1 1 0 1 1]];
+       \end{verbatim}
+      ii. A.
+      \begin{verbatim}
+  pro_x = [[500 600 400 0 0 550]
+             [1000 500 700 0 100 550]
+             [300 200 100 0 500 150]
+             [300 0 100 0 100 350]
+             [800 400 600 0 1000 1150]
+             [200 300 400 0 300 550]
+             [100 150 200 0 0 110]];
+      \end{verbatim}
+      B. \begin{verbatim}
+      sell=pro_x+pro_r=[[500,600,300,200,0,500],
+        [1000,500,600,300,100,500],
+        [300,200,0,400,500,100],
+       [300,0,0,500,100,300],
+       [800,400,500,200,1000,1100],
+       [200,300,400,0,300,500],
+       [100,150,100,100,0,60]];
+     \end{verbatim}
+
+     C.\begin{verbatim}
+     pro_r = [[0 0 100 0 0 50]
+             [0 0 100 0 0 50]
+             [0 0 100 0 0 50]
+             [0 0 100 0 0 50]
+             [0 0 100 0 0 50]
+             [0 0 0 0 0 50]
+             [0 0 100 0 0 50]];
+     \end{verbatim}
+     iii. The total selling profit: 108380 \pounds \\
+     iv. The total holding cost: 475 \pounds \\
+     v. The total net profit: 108855 \pounds \\
+    \end{solution}
+
+\end{enumerate}
+
+\vspace{20pt}
+
+\textbf{Remark:} You need to include your .mod, .dat, .pdf and .tex files in your uploaded .zip file.
+
+%========================================================================
+\end{document}
